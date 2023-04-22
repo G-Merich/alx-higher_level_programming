@@ -1,19 +1,28 @@
 #!/usr/bin/python3
+"""
+this is python/MSQLdb project
 
 """
-mydb = mysql.connector.connect(
-    host="0-select_states.py",
-    user="username",
-    password="password",
-    database="hbtn_0e_0_usa"
-)
-"""
 
-import sys
 import MySQLdb
+from sys import argv
+def print_states(username, password, db_name):
+    db = MySQLdb.connect(host="localhost",
+                        user=username,
+                        passwd=password,
+                        db=db_name,
+                        port=3306,
+                        charset="utf8")
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+    outputs = cursor.fetchall()
+    for output in outputs:
+        print(output)
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `states`")
-    [print(state) for state in c.fetchall()]
+    credentials = argv
+    username = argv[1]
+    passwd = argv[2]
+    db_name = argv[3]
+    print_states(username, passwd, db_name)
+

@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """
-Using module SQLAIchemy that performs create a state class
+Module that performs creates a city object print
 """
 from model_state import Base, State
+from model_city import City
 from Sys import argv
 from sqlalchemy import creat_engine
 from sqlalchemy.orm import sessionmaker
@@ -18,8 +19,9 @@ if __name_ == "__main__":
     # create a Session 
     session = Session()
     Base.matadata.creat_all(engine)
-
-    s_tate = session.query(State).order_by(State.id).all()
-    for state in s_tate:
-        print("{}: {}".format(state.id, state.name))
+    
+    city = session.query(State, City).jion(City).order_by(City.id)
+    fro state, city in city:
+        print("{}: ({}) {}".format(state.name, city.id, city.name))
+    # close session
     session.close()

@@ -1,29 +1,29 @@
 #!/usr/bin/python3
-
 """
-showcase all the values in the database  
-mydb = mysql.connector.connect(
-    host="0-select_states.py",
-    user="username",
-    password="password",
-    database="hbtn_0e_0_usa"
-)
-
+This is an argument statement
+Using module SQLAIchemy that performs create a state class
 """
 
-import sys
-from sqlalchemy import create_engine
+from model_state import Base, State
+from Sys import argv
+from sqlalchemy import creat_engine
 from sqlalchemy.orm import sessionmaker
-from model_state import State
 
-if __name__ == "__main__":
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
+if __name_ == "__main__":
+
+    # creat an engine
+    engine = creat_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
+        argv[1], argv[2], argv[3]), pool_pre_ping=True)
+
+    # create a configurd a "Session" class
     Session = sessionmaker(bind=engine)
+    # create a Session 
     session = Session()
+    Base.matadata.creat_all(engine)
 
-    louisiana = State(name="Louisiana")
-    session.add(louisiana)
+    add_state = State(name="Louisiana")
+    session.add(add_state)
+    # cimmit and close session
     session.commit()
-    print(louisiana.id)
+    print(add_state.id)
+    session.close()

@@ -1,20 +1,24 @@
 #!/usr/bin/python3
-
 """
-  mydb = mysql.connector.connect(
-    host="0-select_states.py",
-    user="username",
-    password="password",
-    database="hbtn_0e_0_usa"
-)
-
+Working on table
 """
-import sys
+
 import MySQLdb
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `states` ORDER BY `id`")
-    [print(state) for state in c.fetchall() if state[1][0] == "N"]
-
+if (len(argv) < 4):
+    pass
+else:
+    conn = MySQLdb.connect(host="localhost",
+                            user=argv[1],
+                            passwd=argv[2],
+                            db=argv[3],
+                            port=3306,
+                            charset="utf8")
+    current = conn.cursor()
+    current.execute("SELECT * FROM states")
+    results = current.fetchall()
+    for result in results:
+        if (result[1][0] == "N"):
+            print(result)
+    conn.close()

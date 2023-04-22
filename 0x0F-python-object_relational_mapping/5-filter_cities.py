@@ -1,23 +1,34 @@
 #!/usr/bin/python3
-
 """
-showcase all the values in the database  
-mydb = mysql.connector.connect(
-    host="0-select_states.py",
-    user="username",
-    password="password",
-    database="hbtn_0e_0_usa"
-)
-
+This is an argument statement
 """
-import sys
 import MySQLdb
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `cities` as `c` \
-                INNER JOIN `states` as `s` \
-                   ON `c`.`state_id` = `s`.`id` \
-                ORDER BY `c`.`id`")
-    print(", ".join([ct[2] for ct in c.fetchall() if ct[4] == sys.argv[4]]))
+if (len(argv) < 5):
+    pass
+else:
+    try:
+        connector = MySQLdb.connect(host="localhost", 
+                                    port=3306, 
+                                    user=argv[1],
+                                    passwd=argv[2],
+                                    db=argv[3],
+                                    charset="utf8"
+                                    )
+    except IndexError:
+        pass
+    cur = connector.cursor()
+    cur.execute("SELECT cities.name\
+                FROM `cities`\
+                JOIN `states` ON state_id=states.id\
+                WHERE states.name=(%s)\
+                ORDER BY cities.id", [argv[4]])
+    results = cur.fetchall()
+    cities = ""
+    for result in results:
+        for result2 in result:
+            cities += (result2) + ", "
+    print(cities[:-2])
+    cur.close()
+    connector.close()

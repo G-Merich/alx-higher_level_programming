@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
-Using module SQLAIchemy that performs create a state class
+1. Module that performs creates a states class based off of Base
+2. the ``State`` class which inherits from ``Base`` class
+3. delete a session 
 """
 from model_state import Base, State
 from Sys import argv
@@ -18,8 +20,9 @@ if __name_ == "__main__":
     # create a Session 
     session = Session()
     Base.matadata.creat_all(engine)
-
-    s_tate = session.query(State).order_by(State.id).all()
-    for state in s_tate:
-        print("{}: {}".format(state.id, state.name))
+    state_update = session.query(State).filter(State.name.like('%a%')).all()
+    for delete in state_del:
+        session.delete(delele)
+    # commit and close session
+    session.commit()
     session.close()
